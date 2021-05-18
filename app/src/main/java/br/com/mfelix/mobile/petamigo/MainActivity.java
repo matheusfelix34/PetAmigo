@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Pet> pets = new ArrayList<>();
     private ListView lista;
     private PetAdapter adapter;
+    private BancoPets db =new BancoPets(this);
 
 
     @Override
@@ -26,25 +27,72 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("Ciclo de Vida","Ciclo de Vida - onCreate");
-        setTitle("Cães");
+        setTitle("Pets");
         //colando um titulo no tipo da aplicacao
 
 
         //criando uma lista de tarefas
         //temos que criar aqui uma verficação pra não preecher a lista de novo saca
+
+        //TESTE CRUD
+        //insert ok
+        //abaixo estamos verifificando se a tabela esta vazia antes de preencher
+        if(db.check_empty()){
+            db.addPet(new Pet("Ruy","12","foda","71 8933-3408","cao"));
+            db.addPet(new Pet("Rex","12","maquina de matar","71 8933-3407","cao"));
+            db.addPet(new Pet("Garfilde","13","maquina de comer","71 8794-6591","cao"));
+            db.addPet(new Pet("Loro José","15","maquina de amor","71 8854-6963","passaro"));
+        }
+
+        //TESTE CRUD
+        //Alterar dados
+        Pet pet=new Pet();
+        pet.setId(2);
+        pet.setNome("INVENCIVEL");
+      //  db.atualizarPet(pet);
+
+        //TESTE CRUD
+        //delete ok
+    /*  Pet pet=new Pet();
+        pet.setId(4);
+        db.apagarPet(pet);*/
+
+
+        //TESTE CRUD
+        //ler dados ok
+
         if(pets.isEmpty()){
+            Pet pet1= db.selecionarPet(1);
+            Pet pet2= db.selecionarPet(2);
+            Pet pet3= db.selecionarPet(3);
+            Pet pet4= db.selecionarPet(4);
+            pets.addAll(
+                    Arrays.asList(
+
+                            pet1,pet2,pet3,pet4
+
+                            // new Dog("LER UM LIVRO", "DESCRICAO !", 1)
+                    )
+            );
+        }
+
+
+
+
+
+        /*if(pets.isEmpty()){
 
             pets.addAll(
                     Arrays.asList(
 
-                            new Pet(1,"Rex",12,"fodase","71 8933-3407","cao"),
-                            new Pet(1,"Garfild",13,"fodase","71 8794-6591","gato"),
-                            new Pet(1,"Loro José",15,"fodase","71 8854-6963","passaro")
+                            new Pet(1,"Rex","12","fodase","71 8933-3407","cao"),
+                            new Pet(1,"Garfilde","13","fodase","71 8794-6591","gato"),
+                            new Pet(1,"Loro José","15","fodase","71 8854-6963","passaro")
 
                            // new Dog("LER UM LIVRO", "DESCRICAO !", 1)
                     )
             );
-        }
+        }*/
         //      //chamando nossa lista do layout
         lista = findViewById(R.id.mains_list_pets);
         //metodo que ao clicarmos em um item da lista, fazermos algo

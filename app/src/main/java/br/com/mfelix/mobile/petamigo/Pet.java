@@ -11,12 +11,15 @@ public class Pet implements Serializable{
 
     private Integer id;
     private String nome;
-    private Integer idade;
+    private String idade;
     private String descricao;
     private String contato;
     private String especie;
 
-    public Pet(Integer id, String nome, Integer idade, String descricao, String contato, String especie) {
+
+
+    public Pet(Integer id, String nome, String idade, String descricao, String contato, String especie) {
+        //com id pra update
         this.id = id;
         this.nome = nome;
         this.idade = idade;
@@ -26,7 +29,20 @@ public class Pet implements Serializable{
     }
 
     public Pet() {
+        //usado para instancias
     }
+
+
+
+    public Pet(String nome, String idade, String descricao, String contato, String especie) {
+        //sem id, apenas para o insert, pois o id vai ser auto incremente
+        this.nome = nome;
+        this.idade = idade;
+        this.descricao = descricao;
+        this.contato = contato;
+        this.especie = especie;
+    }
+
 
     public String getEspecie() {
         return especie;
@@ -60,11 +76,11 @@ public class Pet implements Serializable{
         this.contato = contato;
     }
 
-    public Integer getIdade() {
+    public String getIdade() {
         return idade;
     }
 
-    public void setIdade(Integer idade) {
+    public void setIdade(String idade) {
         this.idade = idade;
     }
 

@@ -99,7 +99,7 @@ public class FormActivity extends AppCompatActivity {
         pet.setContato(numero.getText().toString());
         pet.setDescricao(desc.getText().toString());
         pet.setEspecie(especie.getSelectedItem().toString());
-        pet.setIdade(Integer.parseInt(idade.getText().toString()));
+        pet.setIdade((idade.getText().toString()));
         finish();
 
 
