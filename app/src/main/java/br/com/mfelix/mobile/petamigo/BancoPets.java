@@ -142,6 +142,9 @@ public class BancoPets extends SQLiteOpenHelper {
 
     }
 
+    void teste(){
+        Log.d("APITESTE","safada");
+    }
 
 
 

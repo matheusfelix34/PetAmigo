@@ -3,6 +3,7 @@ package br.com.mfelix.mobile.petamigo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -27,20 +28,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("Ciclo de Vida","Ciclo de Vida - onCreate");
+
         setTitle("Pets");
+
         //colando um titulo no tipo da aplicacao
 
 
+
+
         //criando uma lista de tarefas
+        Tarefa tarefa = new Tarefa ();
+        tarefa.execute("https://raw.githubusercontent.com/matheusfelix34/api/main/pets.json");
+        for(int i=0; i < pets.size(); i++){
+            Log.d("APITESTE","chegamo porri:"+pets.get(i).getNome());
+
+        }
+        if(pets.isEmpty()){
+            Log.d("APITESTE","essa desgraça tá vazia man:");
+
+            //startActivity(getIntent());
+          /*  finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);*/
+        }
+
+
+
         //temos que criar aqui uma verficação pra não preecher a lista de novo saca
 
         //TESTE CRUD
         //insert ok
-        //abaixo estamos verifificando se a tabela esta vazia antes de preencher
-        if(db.check_empty()){
+        //abaixo estamos verifificando se a o banco  esta vazio antes de preencher
+
+     /*   if(db.check_empty()){
             db.addPet(new Pet("Ruy","12","foda","71 8933-3408","cao"));
             db.addPet(new Pet("Rex","12","maquina de matar","71 8933-3407","cao"));
-            db.addPet(new Pet("Garfilde","13","maquina de comer","71 8794-6591","cao"));
+            db.addPet(new Pet("Garfilde","13","maquina de comer","71 8794-6591","gato"));
             db.addPet(new Pet("Loro José","15","maquina de amor","71 8854-6963","passaro"));
         }
 
@@ -48,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
         //Alterar dados
         Pet pet=new Pet();
         pet.setId(2);
-        pet.setNome("INVENCIVEL");
+        pet.setNome("INVENCIVEL"); */
+
+
+
       //  db.atualizarPet(pet);
 
         //TESTE CRUD
@@ -61,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
         //TESTE CRUD
         //ler dados ok
 
-        if(pets.isEmpty()){
+      /*  if(pets.isEmpty()){
             Pet pet1= db.selecionarPet(1);
             Pet pet2= db.selecionarPet(2);
             Pet pet3= db.selecionarPet(3);
-            Pet pet4= db.selecionarPet(4);
+           // Pet pet4= db.selecionarPet(4);
             pets.addAll(
                     Arrays.asList(
 
@@ -75,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     )
             );
         }
+        */
 
 
 
@@ -124,6 +152,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public class  Tarefa extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String retorno =Conexao.getDados(strings[0]);
+            return retorno;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+ /*for(int i=0; i < lista.size(); i++){
+            Log.d("APITESTE","chegamo porra8"+lista.get(i));
+            //  System.out.println( petList.get(i) );
+        }*/
+            pets=(ArrayList)ConsumirJson.jsonDados(s);
+            setTitle(pets.get(0).getNome());
+            Log.d("APITESTE","mas que porra é essa?:");
+            db.teste();
+           /* for(int i=0; i < pets.size(); i++){
+                Log.d("APITESTE","chegamo porri:"+pets.get(i).getNome());
+
+            }*/
+//diagnostico, não está saindo desse metodo a lista
+        }
+
+    }
+
     public void formulario(View view){
 
         Toast.makeText(this,"Vai para o form", Toast.LENGTH_SHORT).show();
@@ -135,13 +190,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+
+
+
         super.onResume();
         Log.d("Ciclo de Vida","Ciclo de Vida - onResume");
         //usando as formas adpatadas que o android tem de apresentar listas
 
       //  Collections.sort(pets);
         //adapter = new PetAdapter(this, new ArrayList<>(pets));
+
         adapter = new PetAdapter(this, new ArrayList<>(pets));
+
         //pondo a adptaçaõ na nossa listvew do layout
         lista.setAdapter(adapter);
     }

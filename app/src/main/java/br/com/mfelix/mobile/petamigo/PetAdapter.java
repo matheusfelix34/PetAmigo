@@ -1,6 +1,7 @@
 package br.com.mfelix.mobile.petamigo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,13 @@ public class PetAdapter extends BaseAdapter {
     private Context contexto;
 
     public PetAdapter(Context contexto,List<Pet> pets) {
+
         this.contexto = contexto;
+
         this.lista = pets;
+        Log.d("APITESTE","testando");
+
+
 
     }
 
@@ -37,6 +43,7 @@ public class PetAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
+
        //metodo para retornar views
         // FAZEMOS O view abaixo, recebendo o layout da lista tarefa_list_item_2
         //o ViewGroup é o parent, ou seja onde vai ficar , que no caso sera no nosso listview
@@ -54,6 +61,7 @@ public class PetAdapter extends BaseAdapter {
         TextView contato = view.findViewById(R.id.list_pet_contato);
 
         //PEGAMOS A NOSSA TAREFA BASEADO NA POSICAO INFORMADA COM O GETITEM
+
         Pet pet =getItem(position);
 
         //DEPOIS CETAMOS OS ITENS DA TAREFA QUE PEGAMOS NA LISTA nos locais que acabamos defeinir que ficariam
