@@ -38,7 +38,7 @@ public class ConsumirJson {
                 text=jSONObject.getString("situacao");
                 pet.setSituacao(text);
                 pet.setId_tutor(0);
-                Log.d("APITESTE","chegamo porra7");
+
             petList.add(pet);
             }
 

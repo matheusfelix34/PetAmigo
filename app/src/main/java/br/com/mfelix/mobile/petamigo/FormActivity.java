@@ -113,7 +113,8 @@ public class FormActivity extends AppCompatActivity {
         pet.setEspecie(especie.getSelectedItem().toString());
         pet.setIdade((idade.getText().toString()));
         pet.setSituacao("Em adoção");
-        pet.setId_tutor(1);
+       // pet.setId_tutor(1);
+        pet.setId_tutor(MainActivity.tutor_id);
         db.atualizarPet(pet);
         finish();
 

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         //garantindo que os dados da API, FORAM PEGOS
          if(pets_api.isEmpty()){
-            Log.d("APITESTE","essa desgraça tá vazia man:");
+
 
            startActivity(getIntent());
             finish();
@@ -64,22 +64,21 @@ public class MainActivity extends AppCompatActivity {
             for(int i=0; i < pets_api.size(); i++){
                 //PRECISAMOS VERIFICAR, ANTES DE ADICIONAR, SE O PET JÁ NÃO ESTÁ NO BANCO
 
-                Log.d("BANCO_API","ADICIONANDO"+pets_api.get(i).getNome());
+              //  Log.d("BANCO_API","ADICIONANDO"+pets_api.get(i).getNome());
 
                 db.addPet(pets_api.get(i));
-                Log.d("Teste_Banco","Entrando no metodo");
+             ///   Log.d("Teste_Banco","Entrando no metodo");
 
                 if(i==0){
-
+//ADICIONANDO USUARIO
                     db.addUser(new User("Apolo","123456"));
                     Log.d("pondo user","id user");
-//erro aqui
-
-
-
                 }
+
+
+
             }
-         //  tutor_id=db.selecionarUser(1).getId();
+
 
 
 
