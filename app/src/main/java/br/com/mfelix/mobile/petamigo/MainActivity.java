@@ -18,9 +18,14 @@ import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<Pet> pets = new ArrayList<>();
+    public static ArrayList<Pet> pets_api = new ArrayList<>();
     private ListView lista;
     private PetAdapter adapter;
     private BancoPets db =new BancoPets(this);
+    private   Integer s=0;
+    public static  Integer tutor_id=0;
+
+
 
 
     @Override
@@ -39,88 +44,102 @@ public class MainActivity extends AppCompatActivity {
         //criando uma lista de tarefas
         Tarefa tarefa = new Tarefa ();
         tarefa.execute("https://raw.githubusercontent.com/matheusfelix34/api/main/pets.json");
-        for(int i=0; i < pets.size(); i++){
-            Log.d("APITESTE","chegamo porri:"+pets.get(i).getNome());
 
-        }
-        if(pets.isEmpty()){
+
+        //garantindo que os dados da API, FORAM PEGOS
+         if(pets_api.isEmpty()){
             Log.d("APITESTE","essa desgraça tá vazia man:");
 
-            //startActivity(getIntent());
-          /*  finish();
+           startActivity(getIntent());
+            finish();
             overridePendingTransition(0, 0);
             startActivity(getIntent());
-            overridePendingTransition(0, 0);*/
+            overridePendingTransition(0, 0);
         }
 
+//preenchendo banco com dados do Json API
+       if(db.check_empty()){
 
 
-        //temos que criar aqui uma verficação pra não preecher a lista de novo saca
+            for(int i=0; i < pets_api.size(); i++){
+                //PRECISAMOS VERIFICAR, ANTES DE ADICIONAR, SE O PET JÁ NÃO ESTÁ NO BANCO
 
-        //TESTE CRUD
-        //insert ok
-        //abaixo estamos verifificando se a o banco  esta vazio antes de preencher
+                Log.d("BANCO_API","ADICIONANDO"+pets_api.get(i).getNome());
 
-     /*   if(db.check_empty()){
-            db.addPet(new Pet("Ruy","12","foda","71 8933-3408","cao"));
-            db.addPet(new Pet("Rex","12","maquina de matar","71 8933-3407","cao"));
-            db.addPet(new Pet("Garfilde","13","maquina de comer","71 8794-6591","gato"));
-            db.addPet(new Pet("Loro José","15","maquina de amor","71 8854-6963","passaro"));
+                db.addPet(pets_api.get(i));
+                Log.d("Teste_Banco","Entrando no metodo");
+
+                if(i==0){
+
+                    db.addUser(new User("Apolo","123456"));
+                    Log.d("pondo user","id user");
+//erro aqui
+
+
+
+                }
+            }
+         //  tutor_id=db.selecionarUser(1).getId();
+
+
+
+
+
+
         }
 
-        //TESTE CRUD
-        //Alterar dados
-        Pet pet=new Pet();
-        pet.setId(2);
-        pet.setNome("INVENCIVEL"); */
+       if(!pets_api.isEmpty()){
+           tutor_id=db.selecionarUser(1).getId();
+       }
+            //  s=db.selecionarUser(1).getId();
 
 
 
-      //  db.atualizarPet(pet);
 
-        //TESTE CRUD
-        //delete ok
-    /*  Pet pet=new Pet();
-        pet.setId(4);
-        db.apagarPet(pet);*/
+        if(tutor_id!=0){
+            Log.d("Teste_Banco_user","id user"+tutor_id);
+        }
+
+   /* if(s!=0){
+        Log.d("Teste_Banco_user","id user"+s);
+    }*/
+
 
 
         //TESTE CRUD
         //ler dados ok
+//PREENCHENDO TELA VISIVEL
 
-      /*  if(pets.isEmpty()){
-            Pet pet1= db.selecionarPet(1);
-            Pet pet2= db.selecionarPet(2);
-            Pet pet3= db.selecionarPet(3);
-           // Pet pet4= db.selecionarPet(4);
-            pets.addAll(
-                    Arrays.asList(
+    if(pets.isEmpty()){
 
-                            pet1,pet2,pet3,pet4
 
-                            // new Dog("LER UM LIVRO", "DESCRICAO !", 1)
-                    )
-            );
+         long numero_rows=db.getProfilesCount();
+          Log.d("TESTE_BANCO","Némero de rows:"+numero_rows);
+        for(int i=0; i < numero_rows; i++){
+            Log.d("TESTE_BANCO","Adicionando"+db.selecionarPet(i+1).getNome());
+                    pets.add(db.selecionarPet(i+1));
+
         }
-        */
+
+        }
+
+
+      // Log.d("TESTE_BANCO_user","Vendo id usuario"+db.selecionarUser(1).getId());
+
+  /*  if(id_tutor==0){
+        id_tutor=  db.selecionarUser(1).getId();
+        Log.d("TESTE_BANCO","Pondo id tutor"+id_tutor);
+    }*/
+
+
+   /*     id_tutor= db.selecionarUser(1).getId();
+        Log.d("TESTE_BANCO","Pondo id tutor"+id_tutor);
+        name_tutor=db.selecionarUser(1).getName();
+        Log.d("TESTE_BANCO","Pondo Nome tutor"+name_tutor);
+*/
 
 
 
-
-
-        /*if(pets.isEmpty()){
-
-            pets.addAll(
-                    Arrays.asList(
-
-                            new Pet(1,"Rex","12","fodase","71 8933-3407","cao"),
-                            new Pet(1,"Garfilde","13","fodase","71 8794-6591","gato"),
-                            new Pet(1,"Loro José","15","fodase","71 8854-6963","passaro")
-
-                           // new Dog("LER UM LIVRO", "DESCRICAO !", 1)
-                    )
-            );
-        }*/
         //      //chamando nossa lista do layout
         lista = findViewById(R.id.mains_list_pets);
         //metodo que ao clicarmos em um item da lista, fazermos algo
@@ -162,19 +181,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
- /*for(int i=0; i < lista.size(); i++){
-            Log.d("APITESTE","chegamo porra8"+lista.get(i));
-            //  System.out.println( petList.get(i) );
-        }*/
-            pets=(ArrayList)ConsumirJson.jsonDados(s);
-            setTitle(pets.get(0).getNome());
-            Log.d("APITESTE","mas que porra é essa?:");
-            db.teste();
-           /* for(int i=0; i < pets.size(); i++){
-                Log.d("APITESTE","chegamo porri:"+pets.get(i).getNome());
+
+
+            pets_api=(ArrayList)ConsumirJson.jsonDados(s);
+
+            //FUNCIONANDO:OK
+            /*for(int i=0; i < pets_api.size(); i++){
+                Log.d("APITESTE","chegamo porra7"+pets_api.get(i).getNome()
+                );
 
             }*/
-//diagnostico, não está saindo desse metodo a lista
+
         }
 
     }
@@ -187,6 +204,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void adotados(View view){
+
+        Toast.makeText(this,"Adotados", Toast.LENGTH_SHORT).show();
+        //INTENT EXPLICITA, POIS SABEMOS ONDE ESTAMOS E PRA ONDE ESTAMOS INDO
+        Intent intent = new Intent(this, Adotados_Activity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onResume() {

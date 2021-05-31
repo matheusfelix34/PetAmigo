@@ -21,6 +21,9 @@
         <activity android:name=".FormActivity" >
         </activity>
 
+        <activity android:name=".Adotados_Activity" >
+        </activity>
+
     </application>
 
 </manifest>

@@ -15,10 +15,12 @@ public class Pet implements Serializable{
     private String descricao;
     private String contato;
     private String especie;
+    private String situacao;
+    private Integer id_tutor;
 
 
 
-    public Pet(Integer id, String nome, String idade, String descricao, String contato, String especie) {
+    public Pet(Integer id, String nome, String idade, String descricao, String contato, String especie, String situacao,Integer id_tutor) {
         //com id pra update
         this.id = id;
         this.nome = nome;
@@ -26,6 +28,8 @@ public class Pet implements Serializable{
         this.descricao = descricao;
         this.contato = contato;
         this.especie = especie;
+        this.situacao = situacao;
+        this.id_tutor = id_tutor;
     }
 
     public Pet() {
@@ -34,16 +38,35 @@ public class Pet implements Serializable{
 
 
 
-    public Pet(String nome, String idade, String descricao, String contato, String especie) {
+    public Pet(String nome, String idade, String descricao, String contato, String especie, String situacao,Integer id_tutor) {
         //sem id, apenas para o insert, pois o id vai ser auto incremente
         this.nome = nome;
         this.idade = idade;
         this.descricao = descricao;
         this.contato = contato;
         this.especie = especie;
+        this.situacao = situacao;
+        this.id_tutor = id_tutor;
+
     }
 
 
+
+    public Integer getId_tutor() {
+        return id_tutor;
+    }
+
+    public void setId_tutor(Integer id_tutor) {
+        this.id_tutor = id_tutor;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
     public String getEspecie() {
         return especie;
     }

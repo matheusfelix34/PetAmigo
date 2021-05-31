@@ -56,9 +56,10 @@ public class PetAdapter extends BaseAdapter {
         }
         //definindo onde vai ficar cada texto na layout
         TextView nome = view.findViewById(R.id.list_pet_nome);
-        TextView descricao = view.findViewById(R.id.list_pet_descricao);
+        //TextView descricao = view.findViewById(R.id.list_pet_descricao);
         TextView idade = view.findViewById(R.id.list_pet_idade);
         TextView contato = view.findViewById(R.id.list_pet_contato);
+        TextView situacao = view.findViewById(R.id.list_pet_situacao);
 
         //PEGAMOS A NOSSA TAREFA BASEADO NA POSICAO INFORMADA COM O GETITEM
 
@@ -66,9 +67,10 @@ public class PetAdapter extends BaseAdapter {
 
         //DEPOIS CETAMOS OS ITENS DA TAREFA QUE PEGAMOS NA LISTA nos locais que acabamos defeinir que ficariam
         nome.setText(pet.getNome());
-        descricao.setText(pet.getDescricao());
+       // descricao.setText(pet.getDescricao());
         idade.setText(pet.getIdade()+"");
         contato.setText(pet.getContato());
+        situacao.setText(pet.getSituacao());
 
 
 

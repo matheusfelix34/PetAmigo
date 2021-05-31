@@ -27,6 +27,8 @@ public class FormActivity extends AppCompatActivity {
 
     private View b;
 
+    private BancoPets db =new BancoPets(this);
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +57,12 @@ public class FormActivity extends AppCompatActivity {
 
        if( intent.hasExtra("PET")){
 
-        setTitle("Editar Pet");
+        setTitle("Pet");
+
 
         //COMO VAMOS ESTAR EDITANDO, É SUAVE DEIXAR O BUTTOM DE EXCLUIR APARECER AGORA
-        b = findViewById(R.id.form_button_excluir);
-        b.setVisibility(View.VISIBLE);
+        /*b = findViewById(R.id.form_button_excluir);
+        b.setVisibility(View.VISIBLE);*/
 
 
         pet = (Pet) intent.getSerializableExtra("PET");
@@ -67,6 +70,13 @@ public class FormActivity extends AppCompatActivity {
         //abaixo estamos vendo qual é a posicao no select da especie já selecionada daquele pet e pondo ela
         String especie_selecionada = pet.getEspecie();
         int spinnerPosition = adapter.getPosition(especie_selecionada);
+
+        if(pet.getSituacao().equals("Em adoção")){
+            b = findViewById(R.id.form_button_salvar);
+            b.setVisibility(View.INVISIBLE);
+        }
+/*b = findViewById(R.id.form_button_excluir);
+        b.setVisibility(View.VISIBLE);*/
 
         especie.setAdapter(adapter);
         especie.setSelection(spinnerPosition);
@@ -76,11 +86,11 @@ public class FormActivity extends AppCompatActivity {
         numero.setText(pet.getContato());
         idade.setText(pet.getIdade()+"");
 
-        }else {
+        }/*else {
             setTitle("Novo Pet");
            especie.setAdapter(adapter);
             pet = new Pet();
-        }
+        }*/
 
     }
 
@@ -91,28 +101,33 @@ public class FormActivity extends AppCompatActivity {
        if(!MainActivity.pets.contains(pet)) {
             Log.d("Metodo","Alterando7");
             MainActivity.pets.add(pet);
+
         }else {
             int index = MainActivity.pets.indexOf(pet);
             pet = MainActivity.pets.get(index);
         }
+
         pet.setNome(nome.getText().toString());
         pet.setContato(numero.getText().toString());
         pet.setDescricao(desc.getText().toString());
         pet.setEspecie(especie.getSelectedItem().toString());
         pet.setIdade((idade.getText().toString()));
+        pet.setSituacao("Em adoção");
+        pet.setId_tutor(1);
+        db.atualizarPet(pet);
         finish();
 
 
     }
 
 
-    public void excluir(View view){
+    /*public void excluir(View view){
         if(MainActivity.pets.contains(pet)) {
             MainActivity.pets.remove(pet);
         }
 
         Log.d("Metodo","Excluindo");
         finish();
-    }
+    }*/
 
 }

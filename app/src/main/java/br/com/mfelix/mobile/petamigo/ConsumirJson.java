@@ -35,7 +35,10 @@ public class ConsumirJson {
                 pet.setContato(text);
                 text=jSONObject.getString("especie");
                 pet.setEspecie(text);
-
+                text=jSONObject.getString("situacao");
+                pet.setSituacao(text);
+                pet.setId_tutor(0);
+                Log.d("APITESTE","chegamo porra7");
             petList.add(pet);
             }
 
@@ -43,7 +46,7 @@ public class ConsumirJson {
                 Log.d("APITESTE","chegamo porra7"+petList.get(i));
               //  System.out.println( petList.get(i) );
             }*/
-
+            //retorna lista de pets do Json
             return petList;
 
 
